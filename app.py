@@ -1,13 +1,14 @@
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
+import os
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Zertifizierungen.db'
 db = SQLAlchemy(app)
 
 class Zertifizierungen(db.Model):
     """creating the Database Class"""
+    db.create_all()
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(200), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
@@ -59,4 +60,8 @@ def update(id):
         return render_template('update.html', zertifikate=zertifikate)
         
 if __name__ == "__main__":
-    app.run(debug=True)
+    db.create_all()
+    port = int(os.environ.get('PORT', 5000))
+
+    app.run(host = '0.0.0.0', port = port)
+    # app.run(debug=True)

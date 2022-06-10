@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  flask-app:
+    container_name: Pexon-Homework
+    image: flask-app
+    restart: always
+    build:
+      context: .
+    ports:
+      - "5001:5000"
+    volumes:
+      - Zertifizierungen.db:/app/db
+
+volumes:
+  Zertifizierungen.db:
+
+
